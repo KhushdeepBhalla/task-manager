@@ -57,6 +57,7 @@ describe('TaskListPageComponent', () => {
 
     expect(rows()).toHaveLength(3);
     expect(el.querySelector('[data-testid="stat-total"]')?.textContent?.trim()).toBe('3');
+    expect(el.querySelector('[data-testid="stat-completed"]')?.textContent?.trim()).toBe('1');
     expect(el.querySelector('[data-testid="stat-overdue"]')?.textContent?.trim()).toBe('1');
 
     const overdueRows = rows().filter((r) => r.querySelector('[data-testid="overdue-badge"]'));
