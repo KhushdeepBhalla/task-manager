@@ -134,6 +134,16 @@ describe('TaskStore', () => {
       expect(store.stats().overdue).toBe(0);
     });
 
+    it('recomputes the completed count when a completed task is reopened', () => {
+      const { id, ...dto } = { ...SAMPLE_TASKS[2], status: 'todo' as const };
+      api.update.mockReturnValue(of({ ...dto, id }));
+
+      store.updateTask(id, dto).subscribe();
+
+      expect(store.taskById(id)?.status).toBe('todo');
+      expect(store.stats().completed).toBe(0);
+    });
+
     it('updateTask surfaces API errors, keeps state and completes without emitting', () => {
       api.update.mockReturnValue(serverError(404));
       const before = store.tasks();
